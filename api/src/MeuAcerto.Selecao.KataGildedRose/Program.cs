@@ -38,7 +38,7 @@ namespace MeuAcerto.Selecao.KataGildedRose
 			var app = new GildedRose(itens);
 
 
-			for (var i = 0; i < 31; i++)
+			for (var i = 0; i < 30; i++)
 			{
 				Console.WriteLine("-------- dia " + i + " --------");
 				Console.WriteLine("Nome, PrazoValidade, Qualidade");
@@ -46,7 +46,6 @@ namespace MeuAcerto.Selecao.KataGildedRose
 				{
 					Console.WriteLine(itens[j].Nome + ", " + itens[j].PrazoValidade + ", " + itens[j].Qualidade);
 				}
-				Console.WriteLine("");
 				app.AtualizarQualidade();
 			}
 		}
