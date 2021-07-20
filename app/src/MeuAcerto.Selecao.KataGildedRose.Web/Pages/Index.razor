@@ -1,0 +1,80 @@
+﻿@page "/"
+@using MeuAcerto.Selecao.KataGildedRose.Web.Entities
+@inject HttpClient _http
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    <MudGrid Justify="Justify.SpaceBetween">
+        <MudItem xs="12">
+            <MudText Typo="Typo.h3" GutterBottom="true">Estoque da Gilded Rose</MudText>
+        </MudItem>
+        <MudItem xs="9"/>
+        <MudItem xs="2">
+            <MudNumericField @bind-Value="NumDays" Label="Número de dias" Variant="Variant.Text" Min="1"/>
+        </MudItem>
+        <MudItem xs="1">
+            <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Update" aria-label="update"
+                    OnClick="AtualizarEstoque"/>
+        </MudItem>
+    </MudGrid>
+    <MudSimpleTable Hover Bordered Striped FixedHeader Style="overflow-x: auto;">
+        <thead>
+        <tr>
+            @foreach (var h in _header)
+            {
+                <th>@h</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var i in Items)
+        {
+            <tr>
+                <td>@i.Id</td>
+                <td>@i.Nome</td>
+                <td>@i.Categoria</td>
+                <td>@i.Qualidade</td>
+                <td>@(i.PrazoValidade.HasValue ? i.PrazoValidade.Value.Date.ToString("dd/MM/yyyy") : "-")</td>
+            </tr>
+        }
+        </tbody>
+    </MudSimpleTable>
+</MudContainer>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchItems();
+    }
+
+    private async Task FetchItems()
+    {
+        try
+        {
+            Items = await _http.GetFromJsonAsync<IList<Item>>("api/item");
+            Items = Items.OrderBy(x => x.Id).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async void AtualizarEstoque()
+    {
+        var response = await _http.GetAsync($"api/estoque/atualizarqualidade/{NumDays}");
+        if (response.IsSuccessStatusCode)
+        {
+            await FetchItems();
+            StateHasChanged();
+        }
+        else
+        {
+            Console.WriteLine("Falha ao atualizar estoque!");
+        }
+    }
+
+    private long NumDays { get; set; } = 1;
+
+    private IList<Item> Items { get; set; } = new List<Item>();
+    string[] _header = {"ID", "Nome", "Categoria", "Qualidade", "Prazo de Validade"};
+}
