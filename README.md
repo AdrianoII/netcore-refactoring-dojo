@@ -1,36 +1,107 @@
+# MeuAcerto.Selecao.KataGildedRose
 
-# Especificações de Requisitos de Gilded Rose
+Aplicação desenvolvida durante o processo seletivo da Meu Acerto.
 
-Bem-vindo ao time Gilded Rose. Como você deve saber, nós somos uma pequena pousada estrategicamente localizada em uma prestigiosa cidade, atendida pelo amigável atendente Allison. Além de ser uma pousada, nós também compramos e vendemos as mercadorias de melhor qualidade. Infelizmente nossas mercadorias vão perdendo a qualidade conforme chegam próximo sua data de venda.
+Se trata de uma reinterpretação do famigerado kata Gilded Rose, porém com bastante liberdade para mudanças.
 
-Nós temos um sistema instalado que atualiza automaticamente os preços do nosso estoque. Esse sistema foi criado por um rapaz sem noção chamado Leeroy, que agora se dedica à novas aventuras. Seu trabalho será adicionar uma nova funcionalidade para o nosso sistema para que possamos vender uma nova categoria de itens. 
+O projeto foi reestruturado para uma nova arquitetura visando uma melhor organização para possíveis futuras mudanças e adições
 
-## Descrição preliminar
+## Arquitetura
 
-Vamos dar uma breve introdução do nosso sistema:
+![alt text](/home/adrianoii/Repositories/netcore-refactoring-dojo/docs/imgs/layers.png "Title")
 
-* Todos os itens (classe `Item`) possuem uma propriedade chamada `PrazoValidade` que informa o número de dias que temos para vendê-lo
-* Todos os itens possuem uma propriedade chamada `Qualidade` que informa o quão valioso é o item.
-* No final do dia, nosso sistema decrementa os valores das propriedades `PrazoValidade` e `Qualidade` de cada um dos itens do estoque através do método `AtualizarQualidade`.
+A arquitetura do projeto foi inspirada pelos conceitos do Domain-driven desing (DDD) e pela clean-architeture, porém não seguindo estritamente nenhuma das duas.
 
-Bastante simples, não é? Bem, agora que as coisas ficam interessantes:
+### Camadas
 
-* Quando o (`PrazoValidade`) do item tiver passado, a (`Qualidade`) do item diminui duas vezes mais rápido.
-* A (`Qualidade`) do item não pode ser negativa
-* O (`Queijo Brie envelhecido`), aumenta sua qualidade (`Qualidade`) ao invés de diminuir.
-* A (`Qualidade`) de um item não pode ser maior que 50.
-* O item (`Sulfuras, a Mão de Ragnaros`), por ser um item lendário, não precisa ter um (`PrazoValidade`) e sua (`Qualidade`) não precisa ser diminuída.
-* O item (`Ingressos`), assim como o (`Queijo Brie envelhecido`), aumenta sua (`Qualidade`) a medida que o  (`PrazoValidade`) se aproxima;
-    * A (`Qualidade`) aumenta em `2` unidades quando o (`PrazoValidade`) é igual ou menor que `10`.
-    * A (`Qualidade`) aumenta em `3` unidades quando o (`PrazoValidade`) é igual ou menor que `5`.
-    * A (`Qualidade`) do item vai direto à `0` quando o (`PrazoValidade`) tiver passado.
+#### 1. Domain
 
-Nós recentemente assinamos um suprimento de itens Conjurados Magicamente. Isto requer que nós atualizemos nosso sistema:
+A camada Domain, é onde se encontram informações sobre o nosso domínio. E nela que se encontram as nossas Entidades, Enums, abstrações dos nossos casos de uso, e qualquer coisa relacionado ao nosso domínio de negócio que seja independente do sistema.
 
-* Os itens "Conjurados" (`Conjurado`) diminuem a (`Qualidade`) duas vezes mais rápido que os outros itens.
+#### 2. Application
 
-Sinta-se livre para fazer qualquer alteração no método `AtualizarQualidade` e adicionar código novo contanto que tudo continue funcionando perfeitamente. Entretanto, não altere o código da classe `Item` ou da propriedade `Items` na classe `GildedRose` pois elas pertencem a um Goblin que irá te matar com um golpe pois ele não acredita na cultura de código compartilhado.
+A camada Application contém as abstrações necessárias para automatizar nossos casos de uso, e também fornecer serviços para possíveis aplicações.
 
-## Notas Finais
+#### 3. Infrastructure
 
-Para esclarecer: Um item não pode ter uma (`Qualidade`) maior que `50`, entretanto o  (`Sulfuras, a Mão de Ragnaros`) por ser um item lendário vai ter uma qualidade imutável de `80`.
+Na Infrastructure se encontram as implementações de nossos serviços de infraestrutura. É aqui que temos implementações relacionadas ao banco de dados.
+
+#### 4. API (Startup Project)
+
+A camada API é onde se encontra a implementação da API, é nela que configuramos as rotas (através das controllers) e a injeção de dependência.
+
+#### 5. Tests
+
+Na camada de testes se encontram todos os testes dos sistemas. Atualmente existem dois tipos de testes: os unitários e os de aprovação.
+
+### Tecnologias
+
+Além do .NET 5 e do ASP.NET Core, foram utilizadas as seguintes tecnoloigias:
+
+- FluentValidation: para controlar as validações das entidades;
+
+- Dapper: Para o mapeamente entre: resultados de comando e queries => Objetos;
+
+- Postgresql e Npgsql: como banco de dados e seu respectivo driver;
+
+- Swagger (Swashbuckle): Para documentação da API;
+
+- Xunit e ApprovalTests: Para os testes unitários;
+
+- FluentAssertions: Para as asserções dos testes unitários;
+
+### App
+
+Foi feito uma single-page application básica utilizando o Blazor WebAssembly que lista os items persistidos e provêm um botão para atualizar a qualidade dos mesmos. Também foi utilizado os componentes do MudBlazor para terem uma melhor aparência.
+
+## Uso
+
+Existem 2 opção configuradas para rodar o sistema:
+
+- Local (Profile testado com o Rider)
+
+- Docker
+
+### Local
+
+Como o banco de dados só está configurado para ser rodado com o Docker, é necessário subir ele primeiro:
+
+```bash
+docker-compose up gildedrosedb
+```
+
+Com o banco online, basta adicionar o launchSettings.json da Api e/ou APP a sua IDE e executar cada um.
+
+### Docker
+
+Basta executar o seguinte comando na raiz do projeto:
+
+```bash
+docker-compose up -d
+```
+
+OBS: Necessita do docker e do docker-compose
+
+#### Portas
+
+| Projetos/Ambientes | Local | Docker (host) | Docker (container) |
+| ------------------ | ----- | ------------- | ------------------ |
+| Banco de Dados     | -     | 5433          | 5432               |
+| API                | 5000  | 5004          | 80                 |
+| APP                | 5002  | 5006          | 80                 |
+
+Caso tenha problemas com as portas/endereços, eles podem serem configurados no .env, nos appsettings.json de cada projeto e no docker-compose.yml
+
+## Possíveis soluções
+
+- Erro ao subir o container do banco: Delete a pasta `database/postgres-data` (Também é útil para resetar o seed)
+
+- Erro ao subir os containers da API e do APP: Tente reconstruir os serviços
+  
+  - ```bash
+    docker-compose build --no-cache gildedroseapp
+    ```
+  
+  - ```bash
+    docker-compose build --no-cache gildedroseapi
+    ```
