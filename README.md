@@ -8,7 +8,7 @@ O projeto foi reestruturado para uma nova arquitetura visando uma melhor organiz
 
 ## Arquitetura
 
-![Diagrama de camadas](docs/imgs/layers.png)
+![Diagrama de camadas](docs/imgs/layers.png =350x341)
 
 A arquitetura do projeto foi inspirada pelos conceitos do Domain-driven desing (DDD) e pela clean-architeture, porém não seguindo estritamente nenhuma das duas.
 
