@@ -22,3 +22,14 @@ services:
       - gildedrosedb
     ports:
     - '${API_HOST_PORT}:80'
+  gildedroseapp:
+    build:
+      context: ./app/
+      dockerfile: Dockerfile
+      args:
+        - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+        - ASPNETCORE_URLS2=${ASPNETCORE_URLS}
+    depends_on:
+      - gildedroseapi
+    ports:
+      - '${APP_HOST_PORT}:80'
