@@ -8,7 +8,7 @@ O projeto foi reestruturado para uma nova arquitetura visando uma melhor organiz
 
 ## Arquitetura
 
-![alt text](docs/imgs/layers.png)
+![Diagrama de camadas](docs/imgs/layers.png)
 
 A arquitetura do projeto foi inspirada pelos conceitos do Domain-driven desing (DDD) e pela clean-architeture, porém não seguindo estritamente nenhuma das duas.
 
@@ -53,6 +53,8 @@ Além do .NET 5 e do ASP.NET Core, foram utilizadas as seguintes tecnoloigias:
 ### App
 
 Foi feito uma single-page application básica utilizando o Blazor WebAssembly que lista os items persistidos e provêm um botão para atualizar a qualidade dos mesmos. Também foi utilizado os componentes do MudBlazor para terem uma melhor aparência.
+
+![Print da listagem do APP](docs/imgs/app.png)
 
 ## Uso
 
