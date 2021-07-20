@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeuAcerto.Selecao.KataGildedRose", "MeuAcerto.Selecao.KataGildedRose\MeuAcerto.Selecao.KataGildedRose.csproj", "{34E4B032-D96A-4EF6-9F9C-EF5032B2A010}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeuAcerto.Selecao.KataGildedRose.Domain", "MeuAcerto.Selecao.KataGildedRose.Domain\MeuAcerto.Selecao.KataGildedRose.Domain.csproj", "{FFFE5764-7B96-4CD8-923D-2969A657EA2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeuAcerto.Selecao.KataGildedRose.Infrastructure", "MeuAcerto.Selecao.KataGildedRose.Infrastructure\MeuAcerto.Selecao.KataGildedRose.Infrastructure.csproj", "{FC50B0B5-631F-4ECE-B012-6118098B72D9}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{34E4B032-D96A-4EF6-9F9C-EF5032B2A010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34E4B032-D96A-4EF6-9F9C-EF5032B2A010}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34E4B032-D96A-4EF6-9F9C-EF5032B2A010}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34E4B032-D96A-4EF6-9F9C-EF5032B2A010}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFFE5764-7B96-4CD8-923D-2969A657EA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFFE5764-7B96-4CD8-923D-2969A657EA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFFE5764-7B96-4CD8-923D-2969A657EA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
