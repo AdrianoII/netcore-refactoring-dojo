@@ -8,7 +8,7 @@ O projeto foi reestruturado para uma nova arquitetura visando uma melhor organiz
 
 ## Arquitetura
 
-![alt text](/home/adrianoii/Repositories/netcore-refactoring-dojo/docs/imgs/layers.png "Title")
+![alt text](docs/imgs/layers.png)
 
 A arquitetura do projeto foi inspirada pelos conceitos do Domain-driven desing (DDD) e pela clean-architeture, porém não seguindo estritamente nenhuma das duas.
 
